@@ -8,7 +8,7 @@ import org.mozilla.universalchardet.UniversalDetector;
 import support.FileSupport;
 
 public class Detector {
-  
+	
 	public static String execute(String fileName) {
 		UniversalDetector detector = new UniversalDetector(null);
 		String encoding = null;

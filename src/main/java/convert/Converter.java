@@ -8,31 +8,41 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import support.FileSupport;
 import detector.Detector;
 
 public class Converter {
+	
+	private String newFileName;
+	private String originalFile;
+	
+	public Converter(String fileName) { 
+		setNewFileName(fileName);
+		originalFile = fileName;
+	}
 
-	public static String execute(String fileName) {
-		String encoding = Detector.execute(fileName);
+	public String execute() {
+		String encoding = Detector.execute(originalFile);
 		
 		if (encoding == null)
 			return null;
 		
 		if (encoding == "UTF-8")
-			return fileName;
+			return originalFile;
 		
 		try {
-			convertFile(fileName, encoding);
+			convertFile(originalFile, encoding);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return newFileName();
+		return getNewFileName();
 	}
 
-	private static void convertFile(String fileName, String encoding) throws IOException {
+	private void convertFile(String fileName, String encoding) throws IOException {
 		FileInputStream fileInputStream = FileSupport.openFileInputStream(fileName);
 		BufferedReader originalFile = null;
 		OutputStreamWriter newFile = null;
@@ -51,26 +61,33 @@ public class Converter {
 		originalFile.close();
 	}
 
-	private static void copy(BufferedReader originalFile, OutputStreamWriter newFile) throws IOException {
+	private void copy(BufferedReader originalFile, OutputStreamWriter newFile) throws IOException {
 		while (originalFile.ready()) {
 			String linha = originalFile.readLine();
 			newFile.write(linha + "\n");
 		}
 	}
 
-	private static OutputStreamWriter createNewFile() throws FileNotFoundException, UnsupportedEncodingException {
-		FileOutputStream out = new FileOutputStream(newFileName());
+	private OutputStreamWriter createNewFile() throws FileNotFoundException, UnsupportedEncodingException {
+		FileOutputStream out = new FileOutputStream(getNewFileName());
 		OutputStreamWriter newFile = new OutputStreamWriter(out, "UTF-8");
 		return newFile;
 	}
 
-	private static String newFileName() {
-		return FileSupport.getDirectory() + "/novoArquivo.txt";
-	}
-
-	private static BufferedReader openOriginalFile(FileInputStream file, String encoding) throws UnsupportedEncodingException {
+	private BufferedReader openOriginalFile(FileInputStream file, String encoding) throws UnsupportedEncodingException {
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file, encoding));
 		
 		return bufferedReader;
+	}
+	
+	private void setNewFileName(String fileName) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+		String date = dateFormat.format(new Date());
+		
+		newFileName = FileSupport.getDirectory() + "/" + fileName + date + ".txt";
+	}
+	
+	public String getNewFileName() {
+		return newFileName;
 	}
 }
