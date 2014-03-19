@@ -25,5 +25,9 @@ public class FileSupport {
 			e.printStackTrace();
 		}
 	}
+	
+	public static String getDirectory() {
+		return System.getProperty("user.dir");
+	}
 
 }
