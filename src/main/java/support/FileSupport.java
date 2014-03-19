@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public class FileSupport {
 	
+	private static String directory = System.getProperty("user.dir");
+	
 	public static FileInputStream openFileInputStream(String fileName) {
 		FileInputStream file = null;
 		
@@ -27,7 +29,11 @@ public class FileSupport {
 	}
 	
 	public static String getDirectory() {
-		return System.getProperty("user.dir");
+		return directory;
+	}
+	
+	public static void setDirectory(String directory) {
+		FileSupport.directory = directory;
 	}
 
 }

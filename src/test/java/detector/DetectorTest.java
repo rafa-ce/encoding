@@ -26,5 +26,12 @@ public class DetectorTest {
 	
 		Assert.assertEquals("UTF-16LE", resultado);
 	}
+	
+	@Test
+	public void arquivoGrande() {
+		String resultado = Detector.execute("src/test/resources/outros/25mil.csv");
+		
+		System.out.println(resultado);
+	}
 
 }

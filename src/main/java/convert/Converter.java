@@ -80,11 +80,11 @@ public class Converter {
 		return bufferedReader;
 	}
 	
-	private void setNewFileName(String fileName) {
+	public void setNewFileName(String fileName) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
 		String date = dateFormat.format(new Date());
 		
-		newFileName = FileSupport.getDirectory() + "/" + fileName + date + ".txt";
+		newFileName = FileSupport.getDirectory() + "/" + date + ".txt";
 	}
 	
 	public String getNewFileName() {

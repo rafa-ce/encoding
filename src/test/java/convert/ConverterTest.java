@@ -39,6 +39,17 @@ public class ConverterTest {
 		apagaArquivo(converter);
 	}
 	
+	@Test
+	public void identificaCSV() {
+		Converter converter = new Converter("src/test/resources/outros/25mil.csv");
+		converter.execute();
+		
+		String resultado = Detector.execute(converter.getNewFileName());
+		Assert.assertEquals("UTF-8", resultado);
+		
+		apagaArquivo(converter);
+	}
+	
 	public void apagaArquivo(Converter converter) {
 		File file = new File(converter.getNewFileName());
 		file.delete();
