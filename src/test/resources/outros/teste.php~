@@ -1,5 +1,0 @@
-<?php 
-	exec("java -jar encoding.jar arquivo1.txt", $resposta);
-
-	echo $resposta[0] . "\n";
-?>
