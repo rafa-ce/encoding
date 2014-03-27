@@ -27,10 +27,7 @@ public class Converter {
 	public String execute() {
 		String encoding = Detector.execute(originalFile);
 		
-		if (encoding == null)
-			return null;
-		
-		if (encoding == "UTF-8")
+		if (encoding == "UTF-8" || encoding == null)
 			return originalFile;
 		
 		try {
